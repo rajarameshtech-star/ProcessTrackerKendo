@@ -31,7 +31,8 @@ import { ProjectService } from '../../../core/services/project.service';
       <button kendoButton themeColor="primary" routerLink="/service-items/create" icon="plus">New Service Item</button> 
     </app-page-header> 
     <div class="toolbar" *ngIf="!loadingProjects"> 
-      <kendo-dropdownlist [data]="projects" textField="name" valueField="id" [valuePrimitive]="true" [defaultItem]="{name: 'All projects', id: null}" [(ngModel)]="selectedProjectId"></kendo-dropdownlist>
+      <kendo-dropdownlist [data]="projects" textField="name" valueField="id" [valuePrimitive]="true" [defaultItem]="{name: 'All projects', id: null}" [(ngModel)]="selectedProjectId" (valueChange)="onProjectChange()"></kendo-dropdownlist>
+      <kendo-dropdownlist [data]="filteredApplications" textField="name" valueField="id" [valuePrimitive]="true" [defaultItem]="{name: 'All applications', id: null}" [(ngModel)]="selectedAppId" [disabled]="!selectedProjectId"></kendo-dropdownlist>
       <kendo-dropdownlist [data]="processes" textField="processName" valueField="id" [valuePrimitive]="true" [defaultItem]="{processName: 'All processes', id: null}" [(ngModel)]="selectedProcessId"></kendo-dropdownlist>
       <kendo-dropdownlist [data]="statuses" [defaultItem]="'All statuses'" [(ngModel)]="selectedStatus"></kendo-dropdownlist>
       <kendo-dropdownlist [data]="priorities" [defaultItem]="'All priorities'" [(ngModel)]="selectedPriority"></kendo-dropdownlist>
@@ -135,11 +136,14 @@ export class ServiceItemListComponent implements OnInit {
   state: State = { skip: 0, take: 10 };
 
   projects: any[] = [];
+  applications: any[] = [];
+  filteredApplications: any[] = [];
   processes: any[] = [];
   statuses = ['New', 'In Progress', 'Completed', 'Blocked', 'Cancelled'];
   priorities = ['Low', 'Medium', 'High', 'Critical'];
 
   selectedProjectId: string | null = null;
+  selectedAppId: string | null = null;
   selectedProcessId: string | null = null;
   selectedStatus: string | null = 'All statuses';
   selectedPriority: string | null = 'All priorities';
@@ -154,6 +158,15 @@ export class ServiceItemListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params: any) => {
       this.loadLookups().subscribe(() => {
+        if (params['applicationId']) {
+          const appId = String(params['applicationId']);
+          const app = this.applications.find(a => String(a.id) === appId);
+          if (app && app.projectId) {
+            this.selectedProjectId = app.projectId;
+            this.onProjectChange();
+            this.selectedAppId = appId;
+          }
+        }
         this.applyFilters();
       });
     });
@@ -169,12 +182,22 @@ export class ServiceItemListComponent implements OnInit {
       map(data => {
         this.projects = data.projects;
         this.processes = data.processes;
+        this.applications = data.apps;
         this.processes.forEach(p => this.processMap[p.id] = p.processName);
         data.apps.forEach((a: any) => this.appMap[a.id] = a.name);
         this.loadingProjects = false;
         return data;
       })
     );
+  }
+
+  onProjectChange() {
+    this.selectedAppId = null;
+    if (this.selectedProjectId) {
+      this.filteredApplications = this.applications.filter(a => a.projectId === this.selectedProjectId);
+    } else {
+      this.filteredApplications = [];
+    }
   }
 
   applyFilters() {
@@ -187,6 +210,7 @@ export class ServiceItemListComponent implements OnInit {
     };
 
     if (this.selectedProjectId) queryParams.projectId = this.selectedProjectId;
+    if (this.selectedAppId) queryParams.applicationId = this.selectedAppId;
     if (this.selectedProcessId) queryParams.processDefinitionId = this.selectedProcessId;
     if (this.selectedStatus && this.selectedStatus !== 'All statuses') queryParams.status = this.selectedStatus;
     if (this.selectedPriority && this.selectedPriority !== 'All priorities') queryParams.priority = this.selectedPriority;
@@ -206,6 +230,8 @@ export class ServiceItemListComponent implements OnInit {
 
   clearFilters() {
     this.selectedProjectId = null;
+    this.selectedAppId = null;
+    this.filteredApplications = [];
     this.selectedProcessId = null;
     this.selectedStatus = 'All statuses';
     this.selectedPriority = 'All priorities';
