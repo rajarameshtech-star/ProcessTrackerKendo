@@ -1,59 +1,65 @@
-# ProcessTrackerUI
+# ProcessTracker Enterprise 🚀
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+ProcessTracker is a modern, responsive web application designed to systematically track operational work, development processes, and service items. Built with a powerful, enterprise-grade architecture, the application streamlines complex cross-departmental operations, tracks process assignments down to the individual component level, and coordinates high-level architectural tracking.
 
-## Development server
+## 🌟 Key Features
 
-To start a local development server, run:
+*   **Dynamic Entity Management**: Structurally map complex business structures including `Projects`, `Applications`, `Processes`, and discrete `Service Items` (Incidents, Work Items, Requests).
+*   **Deep Real-Time Filtering & Server-Side Pagination**: Full support for deeply nested structural arrays, filtered intuitively via Projects and cascaded onto matched Applications utilizing strict grid parameters tracking state instantaneously.
+*   **Minimalist Professional UI/UX**: Stripped of excess bloat and standardized across the rigorous **Plain Kendo UI** standard, seamlessly integrated with robust **Material Icons**.
+*   **Fluid Animations & Toast Notifications**: Interactive, fluid components providing continuous system visibility without disrupting operational workflow.
 
-```bash
-ng serve
-```
+## 🛠️ Technology Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+*   **Frontend**: Angular (v19)
+*   **UI Framework**: Kendo UI for Angular (Grid, Dropdowns, DateInputs, Dialogs, etc.)
+*   **Styling**: Pure semantic, modular SCSS/CSS leveraging Flexbox & CSS Grid over classic utility bloat.
+*   **Architecture**: Standalone Component Pattern
+*   **State Management**: Optimized Reactive programming via native RxJS.
 
-## Code scaffolding
+## 🚀 Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Prerequisites
 
-```bash
-ng generate component component-name
-```
+Ensure you have the following installed on your local development machine:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+*   [Node.js](https://nodejs.org/en/) (v18.x or above recommended)
+*   Angular CLI: `npm install -g @angular/cli`
+*   Valid commercial / trail license for **Telerik Kendo UI for Angular** (If deploying externally).
 
-```bash
-ng generate --help
-```
+### Installation
 
-## Building
+1.  **Clone the Repository**
+    \`\`\`bash
+    git clone https://github.com/rajarameshtech-star/ProcessTrackerKendo.git
+    cd ProcessTrackerKendo
+    \`\`\`
 
-To build the project run:
+2.  **Install Application Dependencies**
+    \`\`\`bash
+    npm install
+    \`\`\`
 
-```bash
-ng build
-```
+3.  **Start the Local Development Server**
+    \`\`\`bash
+    npm start
+    \`\`\`
+    
+    The application will automatically spin up on standard `http://localhost:4200/`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+4.  **Connect to Backend**
+    To provide persistence, this UI interfaces directly with the ProcessTracker Core API. Ensure your local .NET API server is running on the target port configured under `environments/environment.ts`.
 
-## Running unit tests
+## 📂 Project Navigation Structure
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+*   **/projects** - Holistic overview of organizational operational buckets.
+*   **/applications** - Software applications registered natively under explicit functional project spaces.
+*   **/processes** - Define strictly typed technical workflows to standardize data collection strategies across tickets.
+*   **/service-items** - The heartbeat of atomic work. Assign, track, and monitor items explicitly tracked in real-time grids.
 
-```bash
-ng test
-```
+## 📄 License & Legal
 
-## Running end-to-end tests
+This project encompasses a sophisticated process-tracking ecosystem. It utilizes proprietary libraries (`@progress/kendo-angular-*`) which mandate valid licensing parameters. Please consult organizational repository policies before contributing externally.
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+*Built with logic, flow, and structural perfection.*
