@@ -1,11 +1,11 @@
 
-import { Component, OnInit, inject } from '@angular/core'; 
-import { CommonModule, DatePipe } from '@angular/common'; 
-import { RouterModule } from '@angular/router'; 
-import { PageHeaderComponent } from '../../shared/page-header/page-header.component'; 
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { PageHeaderComponent } from '../../shared/page-header/page-header.component';
 import { StatusChipComponent } from '../../shared/status-chip/status-chip.component';
 import { PriorityChipComponent } from '../../shared/priority-chip/priority-chip.component';
-import { LoadingStateComponent } from '../../shared/loading-state/loading-state.component'; 
+import { LoadingStateComponent } from '../../shared/loading-state/loading-state.component';
 import { ProjectService } from '../../core/services/project.service';
 import { ApplicationService } from '../../core/services/application.service';
 import { ServiceItemService } from '../../core/services/service-item.service';
@@ -14,11 +14,11 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IconsModule } from '@progress/kendo-angular-icons';
 
-@Component({ 
-  selector: 'app-dashboard', 
-  standalone: true, 
-  imports: [CommonModule, RouterModule, PageHeaderComponent, StatusChipComponent, PriorityChipComponent, LoadingStateComponent, IconsModule], 
-  template: `
+@Component({
+   selector: 'app-dashboard',
+   standalone: true,
+   imports: [CommonModule, RouterModule, PageHeaderComponent, StatusChipComponent, PriorityChipComponent, LoadingStateComponent, IconsModule],
+   template: `
     <app-page-header title="Process Tracking" subtitle="Operational overview of your projects and work."></app-page-header> 
     
     <app-loading-state *ngIf="loading"></app-loading-state>
@@ -74,74 +74,74 @@ import { IconsModule } from '@progress/kendo-angular-icons';
        </div>
        <div class="muted-text" *ngIf="!loading && recentItems.length === 0">No recent activity detected.</div>
     </div>
-  `, 
-  styles: [` 
+  `,
+   styles: [` 
     .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px; }
-    .kpi-card { background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; flex-direction: column; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-    .kpi-card:hover { border-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.05); }
-    .val { font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 4px; line-height: 1; }
-    .kpi-label { font-size: 0.875rem; color: var(--muted-text-color); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .kpi-card { background: #ffffff; padding: 16px; border: 1px solid #dee2e6; display: flex; flex-direction: column; cursor: pointer; }
+    .kpi-card:hover { background: #f8f9fa; }
+    .val { font-size: 1.5rem; font-weight: 600; color: #212529; margin-bottom: 4px; line-height: 1; }
+    .kpi-label { font-size: 0.875rem; color: #6c757d; font-weight: 500; text-transform: uppercase; }
     
     .charts-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-    .snapshot-card { background: white; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-    .snapshot-card h3 { margin: 0 0 20px 0; font-size: 1rem; color: var(--text-color); font-weight: 600; }
+    .snapshot-card { background: #ffffff; padding: 16px; border: 1px solid #dee2e6; }
+    .snapshot-card h3 { margin: 0 0 16px 0; font-size: 1rem; color: #212529; font-weight: 600; }
     
-    .stat-list { display: flex; flex-direction: column; gap: 12px; }
-    .stat-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #f8fafc; }
-    .stat-name { font-size: 0.875rem; color: var(--text-color); display: flex; align-items: center; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; margin-right: 12px; }
-    .status-dot[data-status="In Progress"] { background: #3b82f6; }
-    .status-dot[data-status="New"] { background: #10b981; }
-    .status-dot[data-status="Completed"] { background: #a855f7; }
-    .status-dot[data-status="Blocked"] { background: #ef4444; }
-    .stat-val { font-weight: 600; font-size: 1rem; color: var(--primary-color); }
+    .stat-list { display: flex; flex-direction: column; gap: 8px; }
+    .stat-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #e9ecef; }
+    .stat-name { font-size: 0.875rem; color: #495057; display: flex; align-items: center; }
+    .status-dot { width: 8px; height: 8px; background: #6c757d; margin-right: 12px; }
+    .status-dot[data-status="In Progress"] { background: #0d6efd; }
+    .status-dot[data-status="New"] { background: #198754; }
+    .status-dot[data-status="Completed"] { background: #6f42c1; }
+    .status-dot[data-status="Blocked"] { background: #dc3545; }
+    .stat-val { font-weight: 600; font-size: 1rem; color: #212529; }
     
     .recent-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-    .recent-card { text-decoration: none; display: flex; flex-direction: column; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); color: inherit; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-    .recent-card:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .recent-card { text-decoration: none; display: flex; flex-direction: column; background: #ffffff; padding: 16px; border: 1px solid #dee2e6; color: inherit; }
+    .recent-card:hover { background: #f8f9fa; }
     .rc-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
-    .ref { font-family: monospace; font-size: 0.75rem; color: var(--muted-text-color); }
-    .rc-date { font-size: 0.75rem; color: #94a3b8; }
-    .recent-card h4 { margin: 0 0 16px 0; font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
+    .ref { font-family: monospace; font-size: 0.75rem; color: #6c757d; }
+    .rc-date { font-size: 0.75rem; color: #6c757d; }
+    .recent-card h4 { margin: 0 0 12px 0; font-size: 0.95rem; font-weight: 600; line-height: 1.4; color: #212529; }
     .rc-badges { display: flex; gap: 8px; }
-  `] 
-}) 
-export class DashboardComponent implements OnInit { 
-  private projSvc = inject(ProjectService); private appSvc = inject(ApplicationService); private itemSvc = inject(ServiceItemService); private procSvc = inject(ProcessDefinitionService);
-  loading = true;
-  counts = { projects: 0, apps: 0, items: 0, processes: 0 };
-  statusGroups: any[] = []; priorityGroups: any[] = [];
-  recentItems: any[] = [];
+  `]
+})
+export class DashboardComponent implements OnInit {
+   private projSvc = inject(ProjectService); private appSvc = inject(ApplicationService); private itemSvc = inject(ServiceItemService); private procSvc = inject(ProcessDefinitionService);
+   loading = true;
+   counts = { projects: 0, apps: 0, items: 0, processes: 0 };
+   statusGroups: any[] = []; priorityGroups: any[] = [];
+   recentItems: any[] = [];
 
-  ngOnInit() {
-     forkJoin({
-        p: this.projSvc.getProjects().pipe(catchError(()=>of([]))),
-        a: this.appSvc.getApplications().pipe(catchError(()=>of([]))),
-        i: this.itemSvc.getServiceItems().pipe(catchError(()=>of([]))),
-        pr: this.procSvc.getProcessDefinitions().pipe(catchError(()=>of([])))
-     }).subscribe(data => {
-        this.counts.projects = data.p.length;
-        this.counts.apps = data.a.length;
-        this.counts.items = data.i.length;
-        this.counts.processes = data.pr.length;
+   ngOnInit() {
+      forkJoin({
+         p: this.projSvc.getProjects().pipe(catchError(() => of([]))),
+         a: this.appSvc.getApplications().pipe(catchError(() => of([]))),
+         i: this.itemSvc.getServiceItems().pipe(catchError(() => of([]))),
+         pr: this.procSvc.getProcessDefinitions().pipe(catchError(() => of([])))
+      }).subscribe(data => {
+         this.counts.projects = data.p.length;
+         this.counts.apps = data.a.length;
+         this.counts.items = data.i.length;
+         this.counts.processes = data.pr.length;
 
-        // Group status
-        const sMap = new Map();
-        const pMap = new Map();
-        data.i.forEach((x:any) => {
-           const s = x.status || 'Unknown';
-           sMap.set(s, (sMap.get(s) || 0) + 1);
-           
-           const p = x.priority || 'Medium';
-           pMap.set(p, (pMap.get(p) || 0) + 1);
-        });
-        
-        this.statusGroups = Array.from(sMap, ([name, count]) => ({ name, count })).sort((a,b)=>b.count - a.count);
-        this.priorityGroups = Array.from(pMap, ([name, count]) => ({ name, count })).sort((a,b)=>b.count - a.count);
+         // Group status
+         const sMap = new Map();
+         const pMap = new Map();
+         data.i.forEach((x: any) => {
+            const s = x.status || 'Unknown';
+            sMap.set(s, (sMap.get(s) || 0) + 1);
 
-        this.recentItems = data.i.sort((a:any,b:any) => new Date(b.createdAt||0).getTime() - new Date(a.createdAt||0).getTime()).slice(0,6);
-        
-        this.loading = false;
-     });
-  }
+            const p = x.priority || 'Medium';
+            pMap.set(p, (pMap.get(p) || 0) + 1);
+         });
+
+         this.statusGroups = Array.from(sMap, ([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+         this.priorityGroups = Array.from(pMap, ([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+
+         this.recentItems = data.i.sort((a: any, b: any) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()).slice(0, 6);
+
+         this.loading = false;
+      });
+   }
 }

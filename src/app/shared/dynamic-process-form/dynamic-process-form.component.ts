@@ -97,28 +97,30 @@ import { ProcessFieldValueComponent } from '../process-field-value/process-field
     .error-msg { color: #dc2626; display: block; margin-top: 4px; font-size: 0.75rem; }
     .mt-4 { margin-top: 24px; }
     
-    .completion-bar-container { background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 24px; }
-    .completion-header { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text-color); }
-    .progress-track { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
-    .progress-fill { height: 100%; background: var(--primary-color); transition: width 0.3s ease; }
+    .completion-bar-container { background: #f8f9fa; padding: 16px; border: 1px solid #dee2e6; margin-bottom: 24px; }
+    .completion-header { display: flex; justify-content: space-between; margin-bottom: 8px; color: #212529; }
+    .progress-track { height: 8px; background: #e9ecef; border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #0058e9; transition: width 0.3s ease; }
     .progress-fill.complete { background: #10b981; }
     .completion-footer { margin-top: 8px; font-size: 0.75rem; }
     .warning-text { color: #b45309; font-weight: 500; }
     
     .data-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-    .data-item { display: flex; flex-direction: column; background: white; padding: 12px; border-radius: 8px; border: 1px solid transparent; }
-    .data-label { font-size: 0.75rem; font-weight: 600; color: var(--muted-text-color); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.05em; }
-    .data-value { font-size: 0.9rem; color: var(--text-color); min-height: 24px; display:flex; align-items:center; }
+    .data-item { display: flex; flex-direction: column; }
+    .data-label { font-size: 0.75rem; font-weight: 600; color: #6c757d; text-transform: uppercase; margin-bottom: 6px; }
+    .data-value { font-size: 0.9rem; color: #212529; min-height: 24px; display:flex; align-items:center; }
     .data-value.missing { border-radius: 4px; border: 1px dashed #fcd34d; background: #fffbeb; padding: 4px 8px; margin-left: -8px; }
     
-    .dynamic-form { background: #f8fafc; padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-    .field-container { display: flex; flex-direction: column; }
-    .field-container label { font-size: 0.875rem; font-weight: 500; margin-bottom: 6px; color: var(--text-color); display: block; }
+    .dynamic-form { background: #ffffff; padding: 16px; border: 1px solid #dee2e6; }
+    
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    .field-container label { font-size: 0.875rem; font-weight: 500; margin-bottom: 6px; color: #212529; display: block; }
+    .req-mark { color: #dc3545; margin-left: 4px; }
+    .error-msg { font-size: 0.75rem; color: #dc3545; margin-top: 4px; display: block; }
     
     kendo-datepicker, kendo-datetimepicker, kendo-dropdownlist, kendo-numerictextbox, kendo-textbox { width: 100%; }
     
-    .form-action-bar { display: flex; justify-content: flex-end; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+    .form-action-bar { display: flex; justify-content: flex-end; gap: 12px; padding-top: 16px; border-top: 1px solid #dee2e6; }
   `]
 })
 export class DynamicProcessFormComponent implements OnInit, OnChanges {

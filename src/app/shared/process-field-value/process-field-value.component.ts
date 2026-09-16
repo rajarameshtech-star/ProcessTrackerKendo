@@ -37,12 +37,12 @@ import { CommonModule, DatePipe } from '@angular/common';
   styles: [`
     .bool-indicator { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: #fee2e2; color: #991b1b; }
     .bool-indicator.yes { background: #dcfce7; color: #166534; }
-    .val-url { color: var(--primary-color); text-decoration: underline; text-underline-offset: 4px; }
+    .val-url { color: #0058e9; text-decoration: underline; text-underline-offset: 4px; }
     .val-text { white-space: pre-wrap; word-break: break-word; }
   `]
 })
 export class ProcessFieldValueComponent implements OnInit {
   @Input() value: any;
   @Input() fieldType!: number;
-  ngOnInit() {}
+  ngOnInit() { }
 }
