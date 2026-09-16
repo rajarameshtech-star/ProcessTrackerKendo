@@ -40,7 +40,7 @@ import { process, State } from '@progress/kendo-data-query';
         </kendo-grid-column>
         <kendo-grid-column field="processName" title="Process Name" [width]="250">
            <ng-template kendoGridCellTemplate let-dataItem>
-             <span style="font-weight: 500; color: var(--text-color);">{{dataItem.processName || 'Unnamed Process'}}</span>
+             <span style="font-weight: 500; color: #212529;">{{dataItem.processName || 'Unnamed Process'}}</span>
            </ng-template>
         </kendo-grid-column>
         <kendo-grid-column field="description" title="Description"></kendo-grid-column>
@@ -92,10 +92,10 @@ import { process, State } from '@progress/kendo-data-query';
     </kendo-dialog>
   `,
   styles: [`
-    .toolbar { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; background: var(--surface-color); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); }
-    .ref-link { color: var(--primary-color); font-weight: 600; }
-    .grid-container { box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; }
-    .active-pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: #dcfce7; color: #166534; }
+    .toolbar { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; background: #ffffff; padding: 16px; border: 1px solid #dee2e6; }
+    .ref-link { color: #0058e9; font-weight: 600; }
+    .grid-container { border: 1px solid #dee2e6; overflow: hidden; }
+    .active-pill { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; background: #dcfce7; color: #166534; }
     .active-pill.inactive { background: #fee2e2; color: #991b1b; }
   `]
 })

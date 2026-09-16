@@ -57,12 +57,12 @@ import { Project } from '../../../core/models/project.model';
   styles: [`
     .toolbar { display: flex; margin-bottom: 24px; width: 300px; }
     .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-    .item-card { background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s; }
-    .item-card:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+    .item-card { background: #ffffff; border: 1px solid #dee2e6; padding: 20px; cursor: pointer; }
+    .item-card:hover { background: #f8f9fa; }
     .card-header { display: flex; align-items: center; margin-bottom: 12px; }
-    .card-header h4 { margin: 0 0 4px; }
-    .card-avatar { background: var(--primary-light); color: var(--primary-color); width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 1.25rem; }
-    .description-text { color: var(--muted-text-color); font-size: 0.875rem; margin: 0; }
+    .card-header h4 { margin: 0 0 4px; color: #212529; }
+    .card-avatar { background: #e9ecef; color: #495057; width: 40px; height: 40px; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 1.25rem; }
+    .description-text { color: #6c757d; font-size: 0.875rem; margin: 0; }
   `]
 })
 export class ProjectListComponent implements OnInit {

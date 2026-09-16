@@ -60,10 +60,10 @@ import { ApplicationService } from '../../../core/services/application.service';
   `,
   styles: [`
     .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-    .item-card { border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; background: var(--surface-color); transition: all 0.2s; }
+    .item-card { border: 1px solid #dee2e6; padding: 20px; border-radius: 4px; background: #ffffff; }
     .clickable-card { cursor: pointer; }
-    .clickable-card:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .description-text { margin-top: 16px; color: var(--muted-text-color); font-size: 0.875rem; margin-bottom: 0;}
+    .clickable-card:hover { background: #f8f9fa; }
+    .description-text { margin-top: 16px; color: #6c757d; font-size: 0.875rem; margin-bottom: 0;}
   `]
 })
 export class ApplicationListComponent implements OnInit {

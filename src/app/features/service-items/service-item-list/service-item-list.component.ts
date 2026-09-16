@@ -55,7 +55,7 @@ import { catchError } from 'rxjs/operators';
         </kendo-grid-column> 
         <kendo-grid-column field="title" title="Title" [width]="300">
            <ng-template kendoGridCellTemplate let-dataItem>
-             <div style="font-weight: 500; color: var(--text-color);">{{dataItem.title}}</div>
+             <div style="font-weight: 500; color: #212529;">{{dataItem.title}}</div>
            </ng-template>
         </kendo-grid-column> 
         <kendo-grid-column field="applicationId" title="Application" [width]="180">
@@ -110,10 +110,10 @@ import { catchError } from 'rxjs/operators';
     </kendo-dialog>
   `,
   styles: [` 
-    .toolbar { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; background: var(--surface-color); padding: 16px; border-radius: 8px; border: 1px solid var(--border-color); } 
-    .ref-link { color: var(--primary-color); font-weight: 500; }
-    .sm-avatar { width: 24px; height: 24px; border-radius: 50%; background: #6366f1; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; margin-right: 8px; }
-    .grid-container { box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; }
+    .toolbar { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; flex-wrap: wrap; background: #ffffff; padding: 16px; border: 1px solid #dee2e6; } 
+    .ref-link { color: #0058e9; font-weight: 500; }
+    .sm-avatar { width: 24px; height: 24px; border-radius: 50%; background: #6c757d; color: white; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; margin-right: 8px; }
+    .grid-container { border: 1px solid #dee2e6; overflow: hidden; }
   `]
 })
 export class ServiceItemListComponent implements OnInit {

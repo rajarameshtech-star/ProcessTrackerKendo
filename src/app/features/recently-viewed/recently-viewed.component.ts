@@ -29,23 +29,23 @@ import { IconsModule } from '@progress/kendo-angular-icons';
   `,
   styles: [`
     .recent-list { display: flex; flex-direction: column; gap: 8px; margin-top: 24px; max-width: 800px; }
-    .recent-row { display: flex; align-items: center; padding: 16px; background: white; border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; color: inherit; transition: all 0.15s; }
-    .recent-row:hover { background: #f8fafc; border-color: #cbd5e1; }
-    .item-icon { font-size: 24px; color: #94a3b8; margin-right: 16px; margin-left: 8px; }
+    .recent-row { display: flex; align-items: center; padding: 16px; background: #ffffff; border: 1px solid #dee2e6; border-radius: 4px; text-decoration: none; color: inherit; transition: all 0.15s; }
+    .recent-row:hover { background: #f8f9fa; border-color: #adb5bd; }
+    .item-icon { font-size: 24px; color: #6c757d; margin-right: 16px; margin-left: 8px; }
     .item-content { flex: 1; }
-    .item-title { font-weight: 600; color: var(--text-color); margin-bottom: 4px; font-size: 0.95rem; }
-    .item-meta { font-size: 0.75rem; color: var(--muted-text-color); }
+    .item-title { font-weight: 600; color: #212529; margin-bottom: 4px; font-size: 0.95rem; }
+    .item-meta { font-size: 0.75rem; color: #6c757d; }
     .arrow { color: #cbd5e1; font-size: 18px; }
   `]
 })
 export class RecentlyViewedComponent implements OnInit {
-  rvSvc = inject(RecentlyViewedService); 
+  rvSvc = inject(RecentlyViewedService);
   items: RecentItem[] = [];
   ngOnInit() { this.items = this.rvSvc.get(); }
   getIcon(type: string) {
-     if (type === 'Project') return 'folder';
-     if (type === 'Application') return 'grid-layout';
-     if (type === 'Process') return 'gear';
-     return 'parameter-header';
+    if (type === 'Project') return 'folder';
+    if (type === 'Application') return 'grid-layout';
+    if (type === 'Process') return 'gear';
+    return 'parameter-header';
   }
 }
