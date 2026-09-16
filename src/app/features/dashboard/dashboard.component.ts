@@ -43,12 +43,12 @@ import { IconsModule } from '@progress/kendo-angular-icons';
              </div>
           </div>
           
-          <div class="snapshot-card">
+           <div class="snapshot-card">
              <h3>Priority Snapshot</h3>
              <div class="stat-list">
                 <div class="stat-item" *ngFor="let p of priorityGroups">
                    <div class="stat-name">
-                     <kendo-icon [name]="p.name === 'Critical' ? 'warning' : 'chevron-up'" style="margin-right:8px; font-size:14px; opacity:0.7;"></kendo-icon>
+                     <span class="material-icons" style="margin-right:8px; font-size:16px; opacity:0.7;">{{ p.name === 'Critical' ? 'warning' : 'expand_less' }}</span>
                      {{p.name}}
                    </div>
                    <div class="stat-val">{{p.count}}</div>

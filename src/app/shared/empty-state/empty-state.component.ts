@@ -5,7 +5,7 @@ import { IconsModule } from '@progress/kendo-angular-icons';
 @Component({
   selector: 'app-empty-state', standalone: true, imports: [CommonModule, ButtonModule, IconsModule], template: `
 <div class="empty-state">
-  <kendo-icon [name]="icon" size="xlarge" class="empty-state-icon"></kendo-icon>
+  <span class="material-icons empty-state-icon" style="font-size: 48px;">{{icon}}</span>
   <h3 class="empty-state-title">{{title}}</h3>
   <p class="empty-state-description">{{description}}</p>
   <button *ngIf="actionLabel" kendoButton themeColor="primary" (click)="action.emit()">{{actionLabel}}</button>

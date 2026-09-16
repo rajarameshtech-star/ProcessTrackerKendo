@@ -72,12 +72,14 @@ import { forkJoin, of } from 'rxjs';
              </kendo-grid-column>
              <kendo-grid-column title="Action" [width]="90">
                 <ng-template kendoGridCellTemplate let-dataItem>
-                   <button kendoButton fillMode="flat" themeColor="primary" [routerLink]="['/service-items', dataItem.id]">Open</button>
+                   <button kendoButton title="Open" fillMode="flat" themeColor="primary" [routerLink]="['/service-items', dataItem.id]">
+                      <span class="material-icons">visibility</span>
+                   </button>
                 </ng-template>
              </kendo-grid-column>
            </kendo-grid>
          </div>
-         <app-empty-state *ngIf="serviceItems.length === 0" icon="parameter-header" title="No service items" description="Start managing work inside this application domain." actionLabel="Create Service Item" (action)="router.navigate(['/service-items/create'])"></app-empty-state>
+         <app-empty-state *ngIf="serviceItems.length === 0" icon="description" title="No service items" description="Start managing work inside this application domain." actionLabel="Create Service Item" (action)="router.navigate(['/service-items/create'])"></app-empty-state>
       </div>
     </div>
     

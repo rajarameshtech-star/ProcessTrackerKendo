@@ -29,7 +29,7 @@ import { LoadingStateComponent } from '../../shared/loading-state/loading-state.
        </a>
     </div>
     
-    <app-empty-state *ngIf="!loading && items.length === 0" icon="user" title="No assignments" description="You have no service items assigned at the moment."></app-empty-state>
+    <app-empty-state *ngIf="!loading && items.length === 0" icon="person" title="No assignments" description="You have no service items assigned at the moment."></app-empty-state>
   `,
    styles: [`
     .work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin-top: 24px; }

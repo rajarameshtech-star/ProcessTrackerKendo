@@ -28,12 +28,14 @@ import { ApplicationService } from '../../../core/services/application.service';
               <h4>{{a.name}}</h4>
               <span class="muted-text">Project ID: {{a.projectId || 'None'}}</span>
            </div>
-           <button kendoButton fillMode="flat" themeColor="primary" icon="folder-open">Open</button>
+           <button kendoButton title="Open" fillMode="flat" themeColor="primary">
+              <span class="material-icons">visibility</span>
+           </button>
         </div>
         <p class="description-text">{{a.description || 'No description provided.'}}</p>
       </div>
     </div>
-    <app-empty-state *ngIf="!loading && applications.length === 0" icon="grid" title="No applications found" actionLabel="Create Application" (action)="openCreate()"></app-empty-state>
+    <app-empty-state *ngIf="!loading && applications.length === 0" icon="web" title="No applications found" actionLabel="Create Application" (action)="openCreate()"></app-empty-state>
 
     <!-- Create Dialog -->
     <kendo-dialog *ngIf="showCreate" title="New Application" (close)="closeCreate()" [width]="500">

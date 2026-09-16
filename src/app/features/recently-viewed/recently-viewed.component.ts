@@ -16,12 +16,12 @@ import { IconsModule } from '@progress/kendo-angular-icons';
     
     <div class="recent-list" *ngIf="items.length > 0">
        <a *ngFor="let item of items" [routerLink]="item.url" class="recent-row">
-          <kendo-icon [name]="getIcon(item.type)" class="item-icon"></kendo-icon>
+          <span class="material-icons item-icon">{{getIcon(item.type)}}</span>
           <div class="item-content">
              <div class="item-title">{{item.title}}</div>
              <div class="item-meta">{{item.type}} • {{item.timestamp | date:'medium'}}</div>
           </div>
-          <kendo-icon name="chevron-right" class="arrow"></kendo-icon>
+          <span class="material-icons arrow">chevron_right</span>
        </a>
     </div>
 
@@ -44,8 +44,8 @@ export class RecentlyViewedComponent implements OnInit {
   ngOnInit() { this.items = this.rvSvc.get(); }
   getIcon(type: string) {
     if (type === 'Project') return 'folder';
-    if (type === 'Application') return 'grid-layout';
-    if (type === 'Process') return 'gear';
-    return 'parameter-header';
+    if (type === 'Application') return 'web';
+    if (type === 'Process') return 'settings';
+    return 'description';
   }
 }

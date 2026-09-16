@@ -49,10 +49,16 @@ import { process, State } from '@progress/kendo-data-query';
              <span class="active-pill" [class.inactive]="!dataItem.active">{{dataItem.active ? 'Active' : 'Inactive'}}</span>
            </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column title="Actions" [width]="200" [sortable]="false">
+        <kendo-grid-column title="Actions" [width]="100" [sortable]="false">
           <ng-template kendoGridCellTemplate let-dataItem>
-            <button kendoButton fillMode="flat" themeColor="primary" [routerLink]="['/processes', dataItem.id]">Open</button>
-            <button kendoButton fillMode="flat" themeColor="error" (click)="confirmDelete(dataItem)">Delete</button>
+             <div style="display: flex; gap: 8px;">
+               <button kendoButton title="Open" fillMode="flat" themeColor="primary" [routerLink]="['/processes', dataItem.id]">
+                  <span class="material-icons">open_in_new</span>
+               </button>
+               <button kendoButton title="Delete" fillMode="flat" themeColor="error" (click)="confirmDelete(dataItem)">
+                  <span class="material-icons">delete</span>
+               </button>
+             </div>
           </ng-template>
         </kendo-grid-column>
       </kendo-grid>
