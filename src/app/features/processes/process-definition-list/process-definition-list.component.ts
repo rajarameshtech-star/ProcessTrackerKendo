@@ -49,7 +49,7 @@ import { process, State } from '@progress/kendo-data-query';
              <span class="active-pill" [class.inactive]="!dataItem.active">{{dataItem.active ? 'Active' : 'Inactive'}}</span>
            </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column title="Actions" [width]="100" [sortable]="false">
+        <kendo-grid-column title="Actions" [width]="150" [sortable]="false">
           <ng-template kendoGridCellTemplate let-dataItem>
              <div style="display: flex; gap: 8px;">
                <button kendoButton title="Open" fillMode="flat" themeColor="primary" [routerLink]="['/processes', dataItem.id]">
