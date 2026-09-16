@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-shell', standalone: true, imports: [RouterModule, SidebarComponent, TopbarComponent, CommonModule], template: `
 <div class="app-layout">
   <div class="sidebar-desktop">
-    <app-sidebar [collapsed]="sidebarCollapsed"></app-sidebar>
+    <app-sidebar [collapsed]="sidebarCollapsed" (toggle)="toggleSidebar()"></app-sidebar>
   </div>
   <div class="main-container">
     <app-topbar (toggleSidebar)="toggleSidebar()"></app-topbar>

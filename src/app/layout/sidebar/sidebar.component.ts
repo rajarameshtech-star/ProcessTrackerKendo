@@ -1,13 +1,14 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IconsModule } from '@progress/kendo-angular-icons';
+import { ButtonModule } from '@progress/kendo-angular-buttons';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule],
+  imports: [CommonModule, RouterModule, IconsModule, ButtonModule],
   template: `
     <div class="sidebar" [class.collapsed]="collapsed">
       <div class="branding">
@@ -27,15 +28,18 @@ import { IconsModule } from '@progress/kendo-angular-icons';
         <a routerLink="/recently-viewed" routerLinkActive="active" class="nav-link" title="Recently Viewed"><kendo-icon name="clock"></kendo-icon> <span class="nav-link-text">Recently Viewed</span></a>
       </nav>
       <div class="spacer"></div>
+      <div class="sidebar-footer">
+         <button kendoButton fillMode="flat" [icon]="collapsed ? 'chevron-right' : 'chevron-left'" (click)="toggleCollapse()" style="width: 100%; border-radius: 0; padding: 16px; color: #6c757d; justify-content: center;"></button>
+      </div>
     </div>
   `,
   styles: [`
-    .sidebar { width: 260px; height: 100%; background: #ffffff; border-right: 1px solid #dee2e6; color: #333333; display: flex; flex-direction: column; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; white-space: nowrap; }
+    .sidebar { width: 260px; height: 100%; background: #ffffff; border-right: 1px solid #dee2e6; display: flex; flex-direction: column; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; white-space: nowrap; }
     .sidebar.collapsed { width: 70px; }
     .sidebar.collapsed .brand-name, .sidebar.collapsed .nav-section, .sidebar.collapsed .nav-link-text { display: none; }
     .sidebar.collapsed .branding { justify-content: center; padding: 0; }
     .sidebar.collapsed .nav-link { justify-content: center; padding: 12px; }
-    .sidebar.collapsed kendo-icon { margin: 0; font-size: 1.25rem; }
+    .sidebar.collapsed kendo-icon { margin: 0; font-size: 1.25rem; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
     
     .branding { height: 60px; min-height: 60px; display: flex; align-items: center; padding: 0 24px; border-bottom: 1px solid #dee2e6; gap: 12px; }
     .logo { width: 24px; height: 24px; min-width: 24px; background: #3b82f6; border-radius: 4px; }
@@ -49,4 +53,11 @@ import { IconsModule } from '@progress/kendo-angular-icons';
     .spacer { flex: 1; }
   `]
 })
-export class SidebarComponent { @Input() collapsed = false; }
+export class SidebarComponent {
+  @Input() collapsed = false;
+  @Output() toggle = new EventEmitter<void>();
+
+  toggleCollapse() {
+    this.toggle.emit();
+  }
+}
