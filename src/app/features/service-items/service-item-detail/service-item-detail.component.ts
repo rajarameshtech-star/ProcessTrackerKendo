@@ -61,7 +61,7 @@ import { catchError } from 'rxjs/operators';
                   <ng-template kendoTabContent>
                      <div class="tab-pad">
                         <h3>Tracking Details</h3>
-                        <p style="color: var(--muted-text-color)">Service item creation logged successfully. See Process Data tab for operational workflow details.</p>
+                        <p style="color: #6c757d">Service item creation logged successfully. See Process Data tab for operational workflow details.</p>
                      </div>
                   </ng-template>
                </kendo-tabstrip-tab>
@@ -71,7 +71,7 @@ import { catchError } from 'rxjs/operators';
                          
                          <!-- Creation Call to action -->
                          <div *ngIf="!processRecord && !isCreatingData" class="empty-inline text-center">
-                             <kendo-icon name="form" size="xlarge" class="mb-2" style="color: var(--muted-text-color)"></kendo-icon>
+                             <kendo-icon name="form" size="xlarge" class="mb-2" style="color: #6c757d"></kendo-icon>
                              <h4>Process data hasn't been entered yet</h4>
                              <p>Complete the process information to start tracking this item's progress.</p>
                              <button kendoButton themeColor="primary" class="mt-2 text-center" (click)="isCreatingData = true">Add Process Data</button>
@@ -98,7 +98,7 @@ import { catchError } from 'rxjs/operators';
                <kendo-tabstrip-tab title="Activity">
                   <ng-template kendoTabContent>
                      <div class="tab-pad">
-                        <em style="color: var(--muted-text-color)">Activity logs deferred to next iteration.</em>
+                        <em style="color: #6c757d">Activity logs deferred to next iteration.</em>
                      </div>
                   </ng-template>
                </kendo-tabstrip-tab>
@@ -165,37 +165,32 @@ import { catchError } from 'rxjs/operators';
   `,
    styles: [`
     .mb-4 { margin-bottom: 16px; } .mb-2 { margin-bottom: 8px; } .mx-2 { margin: 0 8px; } .mt-2 { margin-top: 8px; }
-    .breadcrumb { display: flex; align-items: center; font-size: 0.875rem; color: var(--muted-text-color); }
-    .breadcrumb a { color: var(--primary-color); }
+    .breadcrumb { font-size: 0.875rem; margin-bottom: 16px; }
     .layout-wrapper { display: flex; flex-direction: column; gap: 24px; }
-    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #dee2e6; }
     .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .main-title { margin: 0; font-size: 1.5rem; font-weight: 600; color: var(--text-color); }
-    .ref-number { font-size: 0.875rem; color: var(--muted-text-color); }
+    .main-title { margin: 0; font-size: 1.5rem; font-weight: 600; color: #212529; }
+    .ref-number { font-size: 0.875rem; color: #6c757d; }
     .monospaced { font-family: monospace; }
     .header-actions { display: flex; gap: 8px; }
     
-    .main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: flex-start; }
+    .main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: flex-start; }
     @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
     
-    .tab-pad { padding: 24px; }
+    .tab-pad { padding: 24px 0; }
+    .section-head { margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 600; color: #212529; }
     
-    .section-head { margin: 0 0 20px 0; font-size: 1.125rem; font-weight: 600; color: var(--text-color); }
-    
-    .prop-panel { background: #f8fafc; border-radius: 12px; padding: 24px; border: 1px solid var(--border-color); }
-    .prop-list { display: flex; flex-direction: column; gap: 16px; }
+    .prop-panel { padding: 16px; border: 1px solid #dee2e6; }
+    .prop-list { display: flex; flex-direction: column; gap: 8px; }
     .prop-item { display: flex; flex-direction: column; }
-    .prop-label { font-size: 0.75rem; font-weight: 500; color: var(--muted-text-color); margin-bottom: 4px; }
-    .prop-value { font-size: 0.875rem; font-weight: 500; color: var(--text-color); display: flex; align-items: center; }
-    .prop-value.link { color: var(--primary-color); text-decoration: none; }
+    .prop-label { font-size: 0.875rem; font-weight: 600; color: #495057; margin-bottom: 4px; }
+    .prop-value { font-size: 0.875rem; color: #212529; display: flex; align-items: center; }
+    .user-pill { display: inline-flex; align-items: center; background: #f8f9fa; padding: 4px 12px; border: 1px solid #dee2e6; font-size: 0.8125rem; }
+    .sm-avatar { width: 20px; height: 20px; background: #adb5bd; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; margin-right: 8px; }
     
-    .user-pill { display: inline-flex; align-items: center; background: white; padding: 4px 12px 4px 4px; border-radius: 16px; border: 1px solid var(--border-color); font-size: 0.8125rem; }
-    .sm-avatar { width: 20px; height: 20px; border-radius: 50%; background: #6366f1; color: white; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; margin-right: 8px; }
-    
-    .empty-inline { padding: 48px 24px; border: 1px dashed var(--border-color); border-radius: 8px; background: #f8fafc; }
+    .empty-inline { padding: 24px; text-align: center; border: 1px dashed #dee2e6; }
     .text-center { text-align: center; }
-    
-    .process-audit-bar { font-size: 0.75rem; color: var(--muted-text-color); margin-bottom: 12px; text-align: right; }
+    .process-audit-bar { font-size: 0.75rem; color: #6c757d; margin-bottom: 12px; text-align: right; }
   `]
 })
 export class ServiceItemDetailComponent implements OnInit {

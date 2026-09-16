@@ -67,11 +67,11 @@ import { ProcessDefinitionProjectMappingService } from '../../../core/services/p
     </div>
   `,
   styles: [`
-    .max-w-3xl { max-width: 800px; margin: 0 auto; background: var(--surface-color); padding: 32px; border: 1px solid var(--border-color); border-radius: 12px; }
+    .max-w-3xl { max-width: 800px; padding: 24px; border: 1px solid #dee2e6; }
     label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.875rem; }
-    .mt-4 { margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 16px; }
-    .dynamic-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border-color); }
-    .section-head { margin: 0 0 16px; font-size: 1.1rem; color: var(--text-color); }
+    .mt-4 { margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid #dee2e6; padding-top: 16px; }
+    .dynamic-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid #dee2e6; }
+    .section-head { margin: 0 0 16px; font-size: 1.1rem; color: #212529; }
     /* Hide the inner save buttons of the dynamic form since we handle it externally */
     ::ng-deep .dynamic-form .form-actions { display: none !important; }
   `]

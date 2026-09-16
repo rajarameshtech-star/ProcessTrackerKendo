@@ -1,18 +1,18 @@
 
-import { Component, OnInit, inject } from '@angular/core'; 
-import { CommonModule, DatePipe } from '@angular/common'; 
-import { ActivatedRoute, RouterModule, Router } from '@angular/router'; 
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ButtonModule } from '@progress/kendo-angular-buttons'; 
-import { IconsModule } from '@progress/kendo-angular-icons'; 
-import { DialogsModule } from '@progress/kendo-angular-dialog'; 
-import { InputsModule } from '@progress/kendo-angular-inputs'; 
+import { ButtonModule } from '@progress/kendo-angular-buttons';
+import { IconsModule } from '@progress/kendo-angular-icons';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
+import { InputsModule } from '@progress/kendo-angular-inputs';
 import { GridModule } from '@progress/kendo-angular-grid';
-import { LoadingStateComponent } from '../../../shared/loading-state/loading-state.component'; 
+import { LoadingStateComponent } from '../../../shared/loading-state/loading-state.component';
 import { EmptyStateComponent } from '../../../shared/empty-state/empty-state.component';
 import { StatusChipComponent } from '../../../shared/status-chip/status-chip.component';
 import { PriorityChipComponent } from '../../../shared/priority-chip/priority-chip.component';
-import { ApplicationService } from '../../../core/services/application.service'; 
+import { ApplicationService } from '../../../core/services/application.service';
 import { ProjectService } from '../../../core/services/project.service';
 import { ServiceItemService } from '../../../core/services/service-item.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -21,10 +21,10 @@ import { catchError } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 
 @Component({
-  selector: 'app-application-detail',
-  standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule, IconsModule, DialogsModule, InputsModule, GridModule, LoadingStateComponent, EmptyStateComponent, StatusChipComponent, PriorityChipComponent,],
-  template: `
+   selector: 'app-application-detail',
+   standalone: true,
+   imports: [CommonModule, RouterModule, ReactiveFormsModule, ButtonModule, IconsModule, DialogsModule, InputsModule, GridModule, LoadingStateComponent, EmptyStateComponent, StatusChipComponent, PriorityChipComponent,],
+   template: `
     <div class="breadcrumb mb-4">
        <a routerLink="/projects">Projects</a>
        <kendo-icon name="chevron-right" class="mx-2"></kendo-icon>
@@ -96,64 +96,63 @@ import { forkJoin, of } from 'rxjs';
       </kendo-dialog-actions>
     </kendo-dialog>
   `,
-  styles: [`
+   styles: [`
     .mb-4 { margin-bottom: 24px; } .mx-2 { margin: 0 8px; }
-    .breadcrumb { display: flex; align-items: center; font-size: 0.875rem; color: var(--muted-text-color); }
-    .breadcrumb a { color: var(--primary-color); }
+    .breadcrumb { font-size: 0.875rem; margin-bottom: 16px; }
     .layout-wrapper { display: flex; flex-direction: column; gap: 32px; }
-    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #dee2e6; }
     .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
-    .main-title { margin: 0; font-size: 1.75rem; font-weight: 700; color: var(--text-color); letter-spacing: -0.02em; }
-    .ref-number { font-size: 0.95rem; color: var(--muted-text-color); }
+    .main-title { margin: 0; font-size: 1.5rem; font-weight: 600; color: #212529; }
+    .ref-number { font-size: 0.875rem; color: #6c757d; }
     .header-actions { display: flex; gap: 8px; }
     
-    .section-head { margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 600; color: var(--text-color); }
-    .grid-container { box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
-    .ref-link { color: var(--primary-color); font-family: monospace; font-weight: 500; font-size: 0.85rem; }
+    .section-head { margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 600; color: #212529; }
+    .grid-container { overflow: hidden; border: 1px solid #dee2e6; }
+    .ref-link { color: #0058e9; font-family: monospace; font-weight: 500; font-size: 0.85rem; }
   `]
 })
 export class ApplicationDetailComponent implements OnInit {
-  router = inject(Router); private route = inject(ActivatedRoute); private appSvc = inject(ApplicationService); private projSvc = inject(ProjectService); private itemSvc = inject(ServiceItemService); private ns = inject(NotificationService); private fb = inject(FormBuilder); private rv = inject(RecentlyViewedService);
-  loading = true; appId: string | null = null; app: any; project: any; 
-  serviceItems: any[] = [];
-  editForm!: FormGroup; isEditing = false; saving = false;
+   router = inject(Router); private route = inject(ActivatedRoute); private appSvc = inject(ApplicationService); private projSvc = inject(ProjectService); private itemSvc = inject(ServiceItemService); private ns = inject(NotificationService); private fb = inject(FormBuilder); private rv = inject(RecentlyViewedService);
+   loading = true; appId: string | null = null; app: any; project: any;
+   serviceItems: any[] = [];
+   editForm!: FormGroup; isEditing = false; saving = false;
 
-  ngOnInit() {
-    this.appId = this.route.snapshot.paramMap.get('id');
-    if (this.appId) this.loadFull();
-  }
+   ngOnInit() {
+      this.appId = this.route.snapshot.paramMap.get('id');
+      if (this.appId) this.loadFull();
+   }
 
-  loadFull() {
-     this.loading = true;
-     forkJoin({
-        app: this.appSvc.getApplication(this.appId!),
-        items: this.itemSvc.getServiceItems(this.appId!).pipe(catchError(()=>of([])))
-     }).subscribe(data => {
-        this.app = data.app;
-        this.rv.add({ id: this.app.id, type: 'Application', title: this.app.name, url: '/applications/' + this.app.id });
-        this.serviceItems = data.items;
-        
-        if (this.app.projectId) {
-           this.projSvc.getProject(this.app.projectId).subscribe(p => {
-              this.project = p;
-              this.loading = false;
-           });
-        } else {
-           this.loading = false;
-        }
-     });
-  }
+   loadFull() {
+      this.loading = true;
+      forkJoin({
+         app: this.appSvc.getApplication(this.appId!),
+         items: this.itemSvc.getServiceItems(this.appId!).pipe(catchError(() => of([])))
+      }).subscribe(data => {
+         this.app = data.app;
+         this.rv.add({ id: this.app.id, type: 'Application', title: this.app.name, url: '/applications/' + this.app.id });
+         this.serviceItems = data.items;
 
-  openEdit() {
-    this.editForm = this.fb.group({ name: [this.app.name, Validators.required], description: [this.app.description] });
-    this.isEditing = true;
-  }
-  closeEdit() { this.isEditing = false; }
-  saveEdit() {
-    if (this.editForm.invalid) return; this.saving = true;
-    this.appSvc.updateApplication(this.appId!, this.editForm.value).subscribe({
-       next: () => { this.ns.success('Application updated.'); this.app = {...this.app, ...this.editForm.value}; this.isEditing = false; this.saving = false; },
-       error: () => { this.ns.error('Failed to update.'); this.saving = false; }
-    });
-  }
+         if (this.app.projectId) {
+            this.projSvc.getProject(this.app.projectId).subscribe(p => {
+               this.project = p;
+               this.loading = false;
+            });
+         } else {
+            this.loading = false;
+         }
+      });
+   }
+
+   openEdit() {
+      this.editForm = this.fb.group({ name: [this.app.name, Validators.required], description: [this.app.description] });
+      this.isEditing = true;
+   }
+   closeEdit() { this.isEditing = false; }
+   saveEdit() {
+      if (this.editForm.invalid) return; this.saving = true;
+      this.appSvc.updateApplication(this.appId!, this.editForm.value).subscribe({
+         next: () => { this.ns.success('Application updated.'); this.app = { ...this.app, ...this.editForm.value }; this.isEditing = false; this.saving = false; },
+         error: () => { this.ns.error('Failed to update.'); this.saving = false; }
+      });
+   }
 }

@@ -66,7 +66,7 @@ import { process as kendoProcess, State } from '@progress/kendo-data-query';
                   </kendo-grid-column>
                   <kendo-grid-column title="Required" [width]="100">
                      <ng-template kendoGridCellTemplate let-dataItem>
-                         <span [style.color]="dataItem.isRequired ? '#10b981' : 'var(--muted-text-color)'" style="font-weight: 500;">
+                         <span [style.color]="dataItem.isRequired ? '#10b981' : '#6c757d'" style="font-weight: 500;">
                              {{dataItem.isRequired ? 'Yes' : 'No'}}
                          </span>
                      </ng-template>
@@ -90,7 +90,7 @@ import { process as kendoProcess, State } from '@progress/kendo-data-query';
                  <button kendoButton icon="plus" fillMode="flat" (click)="showMapProject = !showMapProject"></button>
                </div>
                
-               <div *ngIf="showMapProject" class="mb-4 pt-form p-3" style="background: white; border-radius: 8px; border: 1px solid var(--border-color);">
+               <div *ngIf="showMapProject" class="mb-4 pt-form p-3" style="background: white; border-radius: 4px; border: 1px solid #dee2e6;">
                   <label>Add to project</label>
                   <kendo-dropdownlist [data]="unmappedProjects" textField="name" valueField="id" [valuePrimitive]="true" [(ngModel)]="projectToMap" style="width: 100%; margin-bottom: 8px;"></kendo-dropdownlist>
                   <div style="display: flex; gap: 8px;">
@@ -148,7 +148,7 @@ import { process as kendoProcess, State } from '@progress/kendo-data-query';
          <div class="form-row" *ngIf="fieldForm.get('fieldType')?.value === 6">
             <label>Dropdown Options JSON</label>
             <textarea kendoTextArea formControlName="optionsJson" placeholder='["Option 1", "Option 2"] or [{"label":"L","value":1}]' [rows]="4"></textarea>
-            <small style="color:var(--muted-text-color)">Enter a valid JSON array.</small>
+            <small style="color:#6c757d">Enter a valid JSON array.</small>
          </div>
 
       </form>
@@ -169,32 +169,19 @@ import { process as kendoProcess, State } from '@progress/kendo-data-query';
   `,
    styles: [`
     .mb-4 { margin-bottom: 16px; } .mx-2 { margin: 0 8px; } .mt-2 { margin-top: 8px; } .p-3 { padding: 12px; }
-    .breadcrumb { display: flex; align-items: center; font-size: 0.875rem; color: var(--muted-text-color); }
-    .breadcrumb a { color: var(--primary-color); }
+    .breadcrumb { font-size: 0.875rem; margin-bottom: 16px; }
     .layout-wrapper { display: flex; flex-direction: column; gap: 24px; }
-    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #dee2e6; }
     .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .main-title { margin: 0; font-size: 1.5rem; font-weight: 600; color: var(--text-color); }
-    .ref-number { font-size: 0.875rem; color: var(--muted-text-color); }
+    .main-title { margin: 0; font-size: 1.5rem; font-weight: 600; }
     .monospaced { font-family: monospace; }
     .header-actions { display: flex; gap: 8px; }
-    
     .main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: flex-start; }
     @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
-    
-    .section-container { background: var(--surface-color); border-radius: 12px; border: 1px solid var(--border-color); padding: 24px; }
-    .section-head { margin: 0 0 20px 0; font-size: 1.125rem; font-weight: 600; color: var(--text-color); }
-    
-    .active-pill { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 500; background: #dcfce7; color: #166534; }
+    .active-pill { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; background: #dcfce7; color: #166534; }
     .active-pill.inactive { background: #fee2e2; color: #991b1b; }
-    
     .type-badge { font-size: 0.75rem; background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px; font-weight: 500;}
-
-    .prop-panel { background: #f8fafc; border-radius: 12px; padding: 24px; border: 1px solid var(--border-color); }
-    .prop-list { display: flex; flex-direction: column; gap: 8px; }
-    .prop-item { display: flex; flex-direction: column; padding: 8px 12px; background: white; border: 1px solid var(--border-color); border-radius: 8px; }
-    
-    .separator { margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 0.875rem; color: var(--muted-text-color); }
+    .separator { margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #dee2e6; font-weight: 600; font-size: 0.875rem; }
     .error-msg { color: #dc2626; display: block; margin-top: 4px; }
   `]
 })

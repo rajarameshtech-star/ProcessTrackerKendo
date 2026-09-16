@@ -57,7 +57,7 @@ import { ApplicationInlineViewComponent } from '../../../shared/application-inli
                      <h4>{{app.name}}</h4>
                      <p>{{app.description || 'Application domain'}}</p>
                   </div>
-                  <kendo-icon [name]="selectedAppId === app.id ? 'chevron-up' : 'chevron-down'" style="margin-left: auto; color: var(--muted-text-color)"></kendo-icon>
+                  <kendo-icon [name]="selectedAppId === app.id ? 'chevron-up' : 'chevron-down'" style="margin-left: auto; color: #6c757d"></kendo-icon>
                </div>
             </div>
             
@@ -74,7 +74,7 @@ import { ApplicationInlineViewComponent } from '../../../shared/application-inli
                <div class="prop-list">
                    <div class="prop-item" *ngFor="let proc of mappedProcesses">
                       <span class="prop-value" style="font-weight: 500;">
-                         <kendo-icon name="gear" style="margin-right: 8px; color: var(--muted-text-color)"></kendo-icon>
+                         <kendo-icon name="gear" style="margin-right: 8px; color: #6c757d"></kendo-icon>
                          <a [routerLink]="['/processes', proc.id]" class="link">{{proc.processName || 'Unnamed Process'}}</a>
                       </span>
                    </div>
@@ -121,33 +121,30 @@ import { ApplicationInlineViewComponent } from '../../../shared/application-inli
   `,
    styles: [`
     .mb-4 { margin-bottom: 24px; } .mx-2 { margin: 0 8px; }
-    .breadcrumb { display: flex; align-items: center; font-size: 0.875rem; color: var(--muted-text-color); }
-    .breadcrumb a { color: var(--primary-color); }
+    .breadcrumb { font-size: 0.875rem; margin-bottom: 16px; }
     .layout-wrapper { display: flex; flex-direction: column; gap: 32px; }
-    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--border-color); }
+    .header-section { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid #dee2e6; }
     .title-row { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
-    .main-title { margin: 0; font-size: 1.75rem; font-weight: 700; color: var(--text-color); letter-spacing: -0.02em; }
-    .ref-number { font-size: 0.95rem; color: var(--muted-text-color); }
+    .main-title { margin: 0; font-size: 1.5rem; font-weight: 600; color: #212529; }
+    .ref-number { font-size: 0.875rem; color: #6c757d; }
     .header-actions { display: flex; gap: 8px; }
     
-    .main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 32px; align-items: flex-start; }
+    .main-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; align-items: flex-start; }
     @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
     
-    .section-head { margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 600; color: var(--text-color); }
+    .section-head { margin: 0 0 16px 0; font-size: 1.125rem; font-weight: 600; color: #212529; }
     
-    .prop-panel { background: #f8fafc; border-radius: 12px; padding: 24px; border: 1px solid var(--border-color); }
-    .prop-list { display: flex; flex-direction: column; gap: 12px; }
-    .prop-item { display: flex; flex-direction: column; padding: 12px; background: white; border: 1px solid var(--border-color); border-radius: 8px; }
-    .prop-value { font-size: 0.875rem; color: var(--text-color); display: flex; align-items: center; }
-    .prop-value .link { color: var(--primary-color); font-weight: 500; text-decoration: none; }
+    .prop-panel { padding: 16px; border: 1px solid #dee2e6; }
+    .prop-list { display: flex; flex-direction: column; gap: 8px; }
+    .prop-item { display: flex; flex-direction: column; }
+    .prop-value { font-size: 0.875rem; color: #212529; display: flex; align-items: center; }
     
     .card-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-    .resource-card { display: flex; align-items: center; padding: 16px; background: white; border: 1px solid var(--border-color); border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s; cursor: pointer; }
-    .resource-card:hover { border-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-    .resource-card.active-card { border-color: var(--primary-color); background-color: #f8fafc; box-shadow: inset 0 0 0 2px var(--primary-color); }
-    .r-icon { width: 40px; height: 40px; background: #e0e7ff; color: #4f46e5; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 16px; font-size: 1.25rem; }
-    .r-content h4 { margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: var(--text-color); }
-    .r-content p { margin: 0; font-size: 0.8125rem; color: var(--muted-text-color); }
+    .resource-card { display: flex; align-items: center; padding: 12px; border: 1px solid #dee2e6; text-decoration: none; color: inherit; cursor: pointer; }
+    .resource-card.active-card { background-color: #f8f9fa; border-color: #adb5bd; }
+    .r-icon { margin-right: 12px; font-size: 1.25rem; color: #6c757d; }
+    .r-content h4 { margin: 0 0 4px 0; font-size: 0.95rem; font-weight: 600; color: #212529; }
+    .r-content p { margin: 0; font-size: 0.8125rem; color: #6c757d; }
   `]
 })
 export class ProjectDetailComponent implements OnInit {

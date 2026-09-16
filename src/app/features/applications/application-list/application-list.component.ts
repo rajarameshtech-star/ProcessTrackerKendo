@@ -41,7 +41,7 @@ import { ApplicationService } from '../../../core/services/application.service';
          <div class="form-row">
             <label>Project ID</label>
             <kendo-numerictextbox formControlName="projectId" [spinners]="false" [autoCorrect]="true" [decimals]="0" format="n0"></kendo-numerictextbox>
-            <small style="color:var(--muted-text-color)">Numeric ID of the parent project.</small>
+            <small style="color:#6c757d">Numeric ID of the parent project.</small>
          </div>
          <div class="form-row">
             <label>Application Name</label>
