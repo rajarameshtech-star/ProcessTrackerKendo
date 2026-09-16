@@ -19,7 +19,8 @@ import { ProcessDefinitionService } from '../../../core/services/process-definit
 import { NotificationService } from '../../../core/services/notification.service';
 import { process, State } from '@progress/kendo-data-query';
 import { Observable, forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+import { ProjectService } from '../../../core/services/project.service';
 
 @Component({
   selector: 'app-service-item-list',
@@ -29,13 +30,13 @@ import { catchError } from 'rxjs/operators';
     <app-page-header title="Service Items" subtitle="Track operational work, ownership, priority and process progress."> 
       <button kendoButton themeColor="primary" routerLink="/service-items/create" icon="plus">New Service Item</button> 
     </app-page-header> 
-    <div class="toolbar" *ngIf="!loading"> 
-      <kendo-textbox placeholder="Search service items..." [style.width.px]="250" [(ngModel)]="searchTerm" (valueChange)="applyFilters()"></kendo-textbox>
-      <kendo-dropdownlist [data]="applications" textField="name" valueField="id" [valuePrimitive]="true" [defaultItem]="{name: 'All applications', id: null}" [(ngModel)]="selectedAppId" (valueChange)="onAppChanged($event)"></kendo-dropdownlist>
-      <kendo-dropdownlist [data]="processes" textField="processName" valueField="id" [valuePrimitive]="true" [defaultItem]="{processName: 'All processes', id: null}" [(ngModel)]="selectedProcessId" (valueChange)="applyFilters()"></kendo-dropdownlist>
-      <kendo-dropdownlist [data]="statuses" [defaultItem]="'All statuses'" [(ngModel)]="selectedStatus" (valueChange)="applyFilters()"></kendo-dropdownlist>
-      <kendo-dropdownlist [data]="priorities" [defaultItem]="'All priorities'" [(ngModel)]="selectedPriority" (valueChange)="applyFilters()"></kendo-dropdownlist>
-      <button kendoButton fillMode="flat" (click)="clearFilters()">Clear filters</button>
+    <div class="toolbar" *ngIf="!loadingProjects"> 
+      <kendo-dropdownlist [data]="projects" textField="name" valueField="id" [valuePrimitive]="true" [defaultItem]="{name: 'All projects', id: null}" [(ngModel)]="selectedProjectId"></kendo-dropdownlist>
+      <kendo-dropdownlist [data]="processes" textField="processName" valueField="id" [valuePrimitive]="true" [defaultItem]="{processName: 'All processes', id: null}" [(ngModel)]="selectedProcessId"></kendo-dropdownlist>
+      <kendo-dropdownlist [data]="statuses" [defaultItem]="'All statuses'" [(ngModel)]="selectedStatus"></kendo-dropdownlist>
+      <kendo-dropdownlist [data]="priorities" [defaultItem]="'All priorities'" [(ngModel)]="selectedPriority"></kendo-dropdownlist>
+      <button kendoButton themeColor="primary" fillMode="solid" icon="filter" (click)="applyFilters()">Apply Filters</button>
+      <button kendoButton fillMode="flat" (click)="clearFilters()">Clear</button>
     </div> 
     <app-loading-state *ngIf="loading"></app-loading-state> 
     
@@ -122,30 +123,29 @@ import { catchError } from 'rxjs/operators';
 })
 export class ServiceItemListComponent implements OnInit {
   private svc = inject(ServiceItemService);
+  private projectSvc = inject(ProjectService);
   private appSvc = inject(ApplicationService);
   private processSvc = inject(ProcessDefinitionService);
   private ns = inject(NotificationService);
   private router = inject(Router);
 
   loading = true;
-  allItems: any[] = [];
-  filteredItems: any[] = [];
-  gridView: import('@progress/kendo-data-query').DataResult | null = null;
-  state: State = { skip: 0, take: 10, sort: [] };
+  loadingProjects = true;
+  gridView: import('@progress/kendo-angular-grid').GridDataResult | null = null;
+  state: State = { skip: 0, take: 10 };
 
-  applications: any[] = [];
+  projects: any[] = [];
   processes: any[] = [];
   statuses = ['New', 'In Progress', 'Completed', 'Blocked', 'Cancelled'];
   priorities = ['Low', 'Medium', 'High', 'Critical'];
 
-  searchTerm = '';
-  selectedAppId: string | null = null;
+  selectedProjectId: string | null = null;
   selectedProcessId: string | null = null;
   selectedStatus: string | null = 'All statuses';
   selectedPriority: string | null = 'All priorities';
 
-  appMap: Record<string, string> = {};
   processMap: Record<string, string> = {};
+  appMap: Record<string, string> = {}; // keep map for app Names
 
   itemToDelete: any = null;
 
@@ -153,70 +153,69 @@ export class ServiceItemListComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: any) => {
-      if (params['applicationId']) {
-        // If the select expects numeric IDs specifically depending on data maps, parse if needed, but string works usually
-        this.selectedAppId = params['applicationId'];
-      }
-      this.refreshData();
+      this.loadLookups().subscribe(() => {
+        this.applyFilters();
+      });
     });
   }
 
-  refreshData() {
-    this.loading = true;
-    forkJoin({
-      items: this.selectedAppId ? this.svc.getServiceItems(this.selectedAppId).pipe(catchError(() => of([]))) : this.svc.getServiceItems().pipe(catchError(() => of([]))),
-      apps: this.selectedAppId ? of(this.applications) : this.appSvc.getApplications().pipe(catchError(() => of([]))),
-      processes: this.processes.length > 0 ? of(this.processes) : this.processSvc.getProcessDefinitions().pipe(catchError(() => of([])))
-    }).subscribe(data => {
-      this.applications = data.apps;
-      this.processes = data.processes;
-      this.applications.forEach(a => this.appMap[a.id] = a.name);
-      this.processes.forEach(p => this.processMap[p.id] = p.processName);
-      this.allItems = data.items;
-      this.applyFilters();
-      this.loading = false;
-    });
-  }
-
-  onAppChanged(appId: string | null) {
-    this.refreshData();
+  loadLookups(): Observable<any> {
+    this.loadingProjects = true;
+    return forkJoin({
+      projects: this.projectSvc.getProjects().pipe(catchError(() => of([]))),
+      processes: this.processSvc.getProcessDefinitions().pipe(catchError(() => of([]))),
+      apps: this.appSvc.getApplications().pipe(catchError(() => of([])))
+    }).pipe(
+      map(data => {
+        this.projects = data.projects;
+        this.processes = data.processes;
+        this.processes.forEach(p => this.processMap[p.id] = p.processName);
+        data.apps.forEach((a: any) => this.appMap[a.id] = a.name);
+        this.loadingProjects = false;
+        return data;
+      })
+    );
   }
 
   applyFilters() {
-    let result = this.allItems;
-    if (this.searchTerm) {
-      const term = this.searchTerm.toLowerCase();
-      result = result.filter(i => (i.title && i.title.toLowerCase().includes(term)) || (i.referenceNumber && i.referenceNumber.toLowerCase().includes(term)) || (i.assignedTo && i.assignedTo.toLowerCase().includes(term)));
-    }
-    if (this.selectedProcessId) {
-      result = result.filter(i => i.processDefinitionId === this.selectedProcessId);
-    }
-    if (this.selectedStatus && this.selectedStatus !== 'All statuses') {
-      result = result.filter(i => i.status === this.selectedStatus);
-    }
-    if (this.selectedPriority && this.selectedPriority !== 'All priorities') {
-      result = result.filter(i => i.priority === this.selectedPriority);
-    }
-    this.filteredItems = result;
-    this.loadGridData();
+    this.loading = true;
+    const pageNumber = (this.state.skip! / this.state.take!) + 1;
+
+    const queryParams: any = {
+      pageNumber: pageNumber,
+      pageSize: this.state.take
+    };
+
+    if (this.selectedProjectId) queryParams.projectId = this.selectedProjectId;
+    if (this.selectedProcessId) queryParams.processDefinitionId = this.selectedProcessId;
+    if (this.selectedStatus && this.selectedStatus !== 'All statuses') queryParams.status = this.selectedStatus;
+    if (this.selectedPriority && this.selectedPriority !== 'All priorities') queryParams.priority = this.selectedPriority;
+
+    this.svc.getPaginatedServiceItems(queryParams).subscribe({
+      next: (res) => {
+        this.gridView = { data: res.items, total: res.totalCount };
+        this.loading = false;
+      },
+      error: () => {
+        this.ns.error('Failed to load service items.');
+        this.gridView = { data: [], total: 0 };
+        this.loading = false;
+      }
+    });
   }
 
   clearFilters() {
-    this.searchTerm = '';
-    this.selectedAppId = null;
+    this.selectedProjectId = null;
     this.selectedProcessId = null;
     this.selectedStatus = 'All statuses';
     this.selectedPriority = 'All priorities';
-    this.refreshData();
-  }
-
-  loadGridData() {
-    this.gridView = process(this.filteredItems, this.state);
+    this.state.skip = 0;
+    this.applyFilters();
   }
 
   dataStateChange(state: State) {
     this.state = state;
-    this.loadGridData();
+    this.applyFilters();
   }
 
   getAppName(id: string) { return this.appMap[id] || id; }
@@ -229,7 +228,7 @@ export class ServiceItemListComponent implements OnInit {
       next: () => {
         this.ns.success('Deleted successfully.');
         this.itemToDelete = null;
-        this.refreshData();
+        this.applyFilters();
       },
       error: () => { this.ns.error('Failed to delete item.'); this.itemToDelete = null; }
     });
