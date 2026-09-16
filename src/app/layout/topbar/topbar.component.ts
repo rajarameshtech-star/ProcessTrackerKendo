@@ -60,25 +60,24 @@ import { catchError } from 'rxjs/operators';
     </kendo-dialog>
   `,
    styles: [` 
-    .topbar { height: 60px; background: white; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; } 
-    .search-container { display: flex; align-items: center; background: #f1f5f9; padding: 8px 16px; border-radius: 20px; width: 400px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; } 
-    .search-container:hover { border-color: #cbd5e1; background: #e2e8f0; }
-    .search-container kendo-icon { color: var(--muted-text-color); margin-right: 8px; }
-    .search-container .placeholder { flex: 1; font-size: 0.875rem; color: var(--muted-text-color); }
-    .search-container .shortcut { font-size: 0.75rem; color: #94a3b8; background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; font-family: monospace; }
+    .topbar { height: 60px; background: #ffffff; border-bottom: 1px solid #dee2e6; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; } 
+    .search-container { display: flex; align-items: center; background: #f8f9fa; padding: 8px 16px; border-radius: 4px; width: 400px; cursor: pointer; border: 1px solid #dee2e6; transition: border-color 0.2s; } 
+    .search-container:hover { border-color: #adb5bd; }
+    .search-container kendo-icon { color: #6c757d; margin-right: 8px; }
+    .search-container .placeholder { flex: 1; font-size: 0.875rem; color: #6c757d; }
+    .search-container .shortcut { font-size: 0.75rem; color: #adb5bd; border: 1px solid #dee2e6; padding: 2px 6px; border-radius: 4px; background: #ffffff; }
     .actions { display: flex; align-items: center; gap: 16px; } 
-    .avatar { width: 32px; height: 32px; border-radius: 50%; background: #6366f1; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; cursor: pointer; } 
+    .avatar { width: 32px; height: 32px; border-radius: 50%; background: #e9ecef; color: #495057; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.875rem; cursor: pointer; border: 1px solid #dee2e6; } 
     
-    .searching-state { padding: 24px; text-align: center; color: var(--muted-text-color); font-size: 0.875rem; }
-    .empty-results { padding: 24px; text-align: center; color: var(--muted-text-color); font-size: 0.875rem; }
-    .hint { padding: 24px; text-align: center; color: var(--muted-text-color); font-size: 0.8125rem; font-style: italic; }
+    .searching-state, .empty-results, .hint { padding: 24px; text-align: center; color: #6c757d; font-size: 0.875rem; }
+    .hint { font-style: italic; }
     
     .results-list { max-height: 400px; overflow-y: auto; }
     .result-group { margin-bottom: 16px; }
-    .group-title { font-size: 0.7rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 8px; padding-left: 8px; }
-    .result-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; text-decoration: none; color: var(--text-color); font-size: 0.875rem; cursor: pointer; transition: background 0.1s; }
-    .result-item:hover { background: #f8fafc; }
-    .result-item kendo-icon { color: #94a3b8; }
+    .group-title { font-size: 0.75rem; font-weight: 600; color: #495057; text-transform: uppercase; margin-bottom: 8px; padding-left: 8px; }
+    .result-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 4px; text-decoration: none; color: #212529; font-size: 0.875rem; cursor: pointer; transition: background 0.2s; }
+    .result-item:hover { background: #f8f9fa; }
+    .result-item kendo-icon { color: #6c757d; }
   `]
 })
 export class TopbarComponent {
