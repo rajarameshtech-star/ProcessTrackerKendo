@@ -18,7 +18,7 @@ export interface PaginatedList<T> {
 @Injectable({ providedIn: 'root' })
 export class ServiceItemService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiBaseUrl}/services`; // user mentioned /services
+  private apiUrl = `${environment.apiBaseUrl}/ServiceItems`;
 
   getPaginatedServiceItems(queryParams: any): Observable<PaginatedList<ServiceItem>> {
     let params = new HttpParams();
